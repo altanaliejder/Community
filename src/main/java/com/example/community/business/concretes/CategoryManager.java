@@ -3,10 +3,11 @@ package com.example.community.business.concretes;
 import com.example.community.business.abstracts.CategoryService;
 import com.example.community.business.dtos.CategoryListDto;
 import com.example.community.business.request.category.CreateCategoryRequest;
-import com.example.community.core.business.BusinessRole;
+import com.example.community.core.business.BusinessRule;
 import com.example.community.core.mapping.ModelMapperService;
 import com.example.community.core.results.*;
 import com.example.community.dataAccess.CategoryDao;
+import com.example.community.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class CategoryManager implements CategoryService {
     private CategoryDao categoryDao;
     private ModelMapperService modelMapperService;
+
     @Autowired
     public CategoryManager(CategoryDao categoryDao, ModelMapperService modelMapperService) {
         this.categoryDao = categoryDao;
@@ -32,8 +34,10 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public Result add(CreateCategoryRequest createCategoryRequest) {
-        var response=BusinessRole.run(checkIfCategoryExist(createCategoryRequest.getName()));
+        var response= BusinessRule.run(checkIfCategoryExist(createCategoryRequest.getName()));
         if(response==null){
+            var category=this.modelMapperService.forRequest().map(createCategoryRequest, Category.class);
+            this.categoryDao.save(category);
             return new SuccessResult("Eklendi");
         }
         return new ErrorResult(response.getMessage());
