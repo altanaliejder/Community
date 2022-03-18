@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryListDto {
+public class RoleUserListDto {
     private int id;
-    private String name;
 }
