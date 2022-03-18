@@ -6,7 +6,9 @@ import com.example.community.core.results.DataResult;
 import com.example.community.core.results.Result;
 import com.example.community.entities.Category;
 
+import java.util.List;
+
 public interface CategoryService {
-    DataResult<CategoryListDto> getAllCategory();
+    DataResult<List<CategoryListDto>> getAllCategory();
     Result add(CreateCategoryRequest createCategoryRequest);
 }
