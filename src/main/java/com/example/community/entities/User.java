@@ -33,7 +33,6 @@ public class User {
     private String gender;
     @OneToMany(mappedBy = "user")
     private List<UserCommunity> userCommunities;
-
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 }
